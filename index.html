@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tofeh — Zine Tofeh and Things</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=Departure+Mono&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0ebe0;--bg2:#e6dfd0;--bg3:#dbd2be;
+  --ink:#1c1a15;--muted:#7c7264;--border:#c8bfab;
+  --koji:#c17f3b;--mold:#4a7c59;--riso:#d4546a;
+  --strudel:#2c4a8c;--cream:#faf7f0;
+  --atun:#1a1a2e;--atun2:#e8d5b7;--ghost:#7b9cbf;
+  --logo-green:#3a6b3a;--logo-red:#7a1a1a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;cursor:crosshair;}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0.6rem 2rem;background:rgba(240,235,224,0.95);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink);}
+.logo-img{height:44px;width:auto;display:block;filter:none;}
+.nav-pills{display:flex;gap:0.3rem;list-style:none;}
+.nav-pills a{font-family:"Departure Mono",monospace;font-size:0.68rem;text-decoration:none;color:var(--muted);padding:0.3rem 0.75rem;border:1px solid transparent;transition:all 0.15s;letter-spacing:0.04em;text-transform:uppercase;}
+.nav-pills a:hover{border-color:var(--ink);color:var(--ink);background:var(--cream);}
+.nav-pills a.active{border-color:var(--logo-green);color:var(--logo-green);}
+
+/* HERO */
+.hero{min-height:100vh;padding:7rem 2.5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:1400px;margin:0 auto;align-items:center;}
+.hero-text{padding-right:4rem;}
+.hero-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.75rem;}
+.pill{font-family:"Departure Mono",monospace;font-size:0.65rem;letter-spacing:0.08em;padding:0.25rem 0.75rem;border:1px solid;text-transform:uppercase;}
+.pill-koji{color:var(--koji);border-color:var(--koji);background:rgba(193,127,59,0.08);}
+.pill-mold{color:var(--mold);border-color:var(--mold);background:rgba(74,124,89,0.08);}
+.pill-pink{color:var(--riso);border-color:var(--riso);background:rgba(212,84,106,0.08);}
+.pill-blue{color:var(--strudel);border-color:var(--strudel);background:rgba(44,74,140,0.08);}
+.pill-ghost{color:var(--ghost);border-color:var(--ghost);background:rgba(123,156,191,0.08);}
+h1{font-family:"Fraunces",serif;font-size:clamp(2.8rem,5vw,5.5rem);font-weight:700;line-height:1.02;letter-spacing:-0.04em;color:var(--ink);margin-bottom:1.5rem;}
+h1 .l2{color:var(--mold);font-style:italic;}
+h1 .l3{color:var(--riso);}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:44ch;line-height:1.85;margin-bottom:2.5rem;}
+.hero-sub strong{color:var(--ink);}
+.hero-actions{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.btn{font-family:"Departure Mono",monospace;font-size:0.75rem;letter-spacing:0.06em;text-decoration:none;display:inline-block;padding:0.7rem 1.4rem;border:1.5px solid;transition:all 0.2s;cursor:crosshair;text-transform:uppercase;}
+.btn-koji{background:var(--koji);color:#fff;border-color:var(--koji);}
+.btn-koji:hover{background:#a8692a;transform:translateY(-2px);}
+.btn-ghost-style{background:transparent;color:var(--ink);border-color:var(--border);}
+.btn-ghost-style:hover{border-color:var(--ink);}
+.btn-atun{background:var(--atun);color:var(--atun2);border-color:var(--atun);}
+.btn-atun:hover{background:#2a2a4e;transform:translateY(-2px);}
+
+/* HERO VISUAL */
+.hero-visual{position:relative;height:520px;display:flex;align-items:center;justify-content:center;}
+.bar{width:6px;background:var(--strudel);border-radius:2px 2px 0 0;opacity:0.85;animation:bounce var(--dur,1.2s) ease-in-out infinite alternate;}
+@keyframes bounce{from{transform:scaleY(0.15);}to{transform:scaleY(1);}}
+.wave-bars{position:absolute;display:flex;gap:4px;align-items:flex-end;height:80px;}
+.zine-float{position:absolute;top:25px;right:-15px;width:105px;height:142px;background:var(--cream);border:2px solid var(--riso);transform:rotate(6deg);box-shadow:3px 3px 0 var(--riso);display:flex;flex-direction:column;padding:9px;gap:5px;animation:floatZ 4s ease-in-out infinite alternate;}
+@keyframes floatZ{from{transform:rotate(6deg) translateY(0);}to{transform:rotate(8deg) translateY(-8px);}}
+.zl{height:5px;background:var(--riso);opacity:0.22;border-radius:2px;}
+.zl.b{opacity:0.65;width:60%;}.zl.s{width:40%;}
+.zstamp{margin-top:auto;font-family:"Departure Mono",monospace;font-size:0.55rem;color:var(--riso);letter-spacing:0.05em;border-top:1px solid var(--riso);padding-top:5px;}
+.spore{position:absolute;border-radius:50%;background:var(--mold);opacity:0.15;animation:drift linear infinite;}
+@keyframes drift{0%{transform:translateY(0) scale(1);opacity:0.15;}50%{opacity:0.25;}100%{transform:translateY(-80px) scale(0.5);opacity:0;}}
+
+/* SECTIONS */
+.section{padding:5.5rem 2.5rem;max-width:1400px;margin:0 auto;}
+.sec-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:3rem;border-bottom:1.5px solid var(--border);padding-bottom:1rem;}
+.sec-num{font-family:"Departure Mono",monospace;font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;}
+h2{font-family:"Fraunces",serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;}
+
+/* STRUDEL */
+.strudel-bg{background:var(--ink);}
+.strudel-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+.strudel-about{color:#a09880;font-size:0.95rem;line-height:1.9;}
+.strudel-about strong{color:var(--cream);}
+.code-block{background:#0f0e0c;border:1px solid #2a2820;padding:1.5rem;font-family:"Departure Mono",monospace;font-size:0.78rem;line-height:2;color:#a09880;position:relative;overflow:hidden;}
+.code-block::before{content:"strudel";position:absolute;top:0.6rem;right:1rem;font-size:0.62rem;color:var(--strudel);letter-spacing:0.1em;opacity:0.6;}
+.cs{color:#7eb8e8;}.cg{color:#7ec8a4;}.co{color:#e8c87e;}.cm{color:#4a5568;}
+.live-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:"Departure Mono",monospace;font-size:0.65rem;color:#7ec8a4;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#7ec8a4;animation:pulse 1.8s ease infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(126,200,164,0.4);}50%{box-shadow:0 0 0 6px rgba(126,200,164,0);}}
+.btn-code{font-family:"Departure Mono",monospace;font-size:0.7rem;letter-spacing:0.05em;text-decoration:none;display:inline-block;padding:0.55rem 1.1rem;border:1px solid #2a2820;color:#a09880;transition:all 0.15s;text-transform:uppercase;}
+.btn-code:hover{border-color:#a09880;color:var(--cream);}
+
+/* ZINES */
+.zine-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem;}
+.zine-card{background:var(--cream);border:2px solid var(--ink);position:relative;transition:transform 0.18s;cursor:crosshair;text-decoration:none;color:var(--ink);display:block;box-shadow:4px 4px 0 var(--ink);}
+.zine-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
+.zine-cover{height:165px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-family:"Fraunces",serif;font-weight:700;font-size:1.2rem;letter-spacing:-0.02em;text-align:center;padding:1.25rem;line-height:1.25;font-style:italic;}
+.zc-pink{background:var(--riso);color:#fff;}
+.zc-koji{background:var(--koji);color:#fff;}
+.zc-mold{background:var(--mold);color:#fff;}
+.zc-blue{background:var(--strudel);color:#fff;}
+.zc-paper{background:var(--bg3);color:var(--ink);}
+.zc-ink{background:var(--ink);color:var(--cream);}
+.issue-badge{position:absolute;top:0.5rem;right:0.65rem;font-family:"Departure Mono",monospace;font-size:0.58rem;letter-spacing:0.1em;opacity:0.7;font-weight:400;text-transform:uppercase;font-style:normal;}
+.zine-info{padding:0.85rem 1rem;border-top:2px solid var(--ink);}
+.zine-title{font-family:"Fraunces",serif;font-size:0.9rem;font-weight:700;margin-bottom:0.2rem;letter-spacing:-0.01em;}
+.zine-meta{font-family:"Departure Mono",monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;}
+.zine-add{border:2px dashed var(--border);box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:230px;color:var(--muted);font-family:"Departure Mono",monospace;font-size:0.68rem;gap:0.5rem;transition:border-color 0.2s,color 0.2s;letter-spacing:0.05em;text-transform:uppercase;background:transparent;}
+.zine-add:hover{border-color:var(--riso);color:var(--riso);}
+
+/* GHOSTLY ATUN */
+.atun-bg{background:var(--atun);}
+.atun-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-bottom:4rem;}
+.atun-about{color:#a09888;font-size:0.95rem;line-height:1.9;}
+.atun-about strong{color:var(--atun2);}
+.atun-about h3{font-family:"Fraunces",serif;font-size:1.4rem;font-style:italic;color:var(--atun2);margin-bottom:1rem;letter-spacing:-0.02em;}
+.char-card{background:#0e0e1c;border:1px solid #2a2a3e;padding:2rem;position:relative;}
+.char-name{font-family:"Fraunces",serif;font-size:2rem;font-weight:700;color:var(--atun2);letter-spacing:-0.03em;margin-bottom:0.25rem;}
+.char-tag{font-family:"Departure Mono",monospace;font-size:0.65rem;color:var(--ghost);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem;}
+.char-traits{display:flex;flex-direction:column;gap:0.6rem;margin-top:1.25rem;}
+.trait{display:flex;justify-content:space-between;align-items:center;font-family:"Departure Mono",monospace;font-size:0.7rem;color:#6a6a8a;letter-spacing:0.04em;padding-bottom:0.5rem;border-bottom:1px solid #1e1e2e;}
+.trait-val{color:var(--atun2);}
+/* Ghost illustration */
+.ghost-wrap{display:flex;justify-content:center;align-items:center;height:220px;position:relative;}
+.ghost-body{width:100px;height:120px;background:linear-gradient(180deg,#c8d8e8 0%,#9ab4c8 100%);border-radius:50px 50px 0 0;position:relative;animation:ghostFloat 3s ease-in-out infinite alternate;filter:drop-shadow(0 8px 24px rgba(123,156,191,0.3));}
+@keyframes ghostFloat{from{transform:translateY(0);}to{transform:translateY(-12px);}}
+.ghost-body::after{content:"";position:absolute;bottom:-18px;left:0;right:0;height:22px;
+  background:conic-gradient(from 0deg at 50% 0%,#9ab4c8 0deg,#9ab4c8 51.4deg,transparent 51.4deg,transparent 102.8deg,#9ab4c8 102.8deg,#9ab4c8 154.2deg,transparent 154.2deg,transparent 205.7deg,#9ab4c8 205.7deg,#9ab4c8 257.1deg,transparent 257.1deg,transparent 308.5deg,#9ab4c8 308.5deg,#9ab4c8 360deg);}
+.ghost-eye{position:absolute;width:14px;height:18px;background:#1a1a2e;border-radius:50%;top:42px;}
+.ghost-eye.l{left:26px;}.ghost-eye.r{right:26px;}
+.ghost-eye::after{content:"";position:absolute;width:4px;height:4px;background:#7b9cbf;border-radius:50%;top:4px;left:3px;}
+.ghost-atun-text{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);font-family:"Departure Mono",monospace;font-size:0.62rem;color:var(--ghost);letter-spacing:0.1em;white-space:nowrap;opacity:0.6;}
+.atun-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;}
+.atun-item{background:#0e0e1c;border:1px solid #2a2a3e;padding:1.25rem;transition:border-color 0.2s;}
+.atun-item:hover{border-color:var(--ghost);}
+.atun-item-label{font-family:"Departure Mono",monospace;font-size:0.62rem;color:var(--ghost);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;}
+.atun-item-title{font-family:"Fraunces",serif;font-size:1rem;color:var(--atun2);font-style:italic;letter-spacing:-0.01em;}
+.atun-item-sub{font-size:0.8rem;color:#6a6a8a;margin-top:0.25rem;line-height:1.5;}
+
+/* ESSAYS */
+.essay-bg{background:var(--bg2);}
+.essay-list{display:flex;flex-direction:column;gap:0;}
+.essay-entry{display:grid;grid-template-columns:100px 1fr auto;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border);align-items:start;text-decoration:none;color:var(--ink);transition:background 0.15s;cursor:crosshair;}
+.essay-entry:first-child{border-top:1px solid var(--border);}
+.essay-entry:hover .essay-title{color:var(--koji);}
+.essay-date{font-family:"Departure Mono",monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.06em;padding-top:0.2rem;}
+.essay-title{font-family:"Fraunces",serif;font-size:1.1rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.2rem;transition:color 0.15s;}
+.essay-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;}
+.essay-tag{font-family:"Departure Mono",monospace;font-size:0.6rem;padding:0.2rem 0.55rem;border:1px solid;letter-spacing:0.07em;text-transform:uppercase;white-space:nowrap;height:fit-content;margin-top:0.2rem;}
+.tag-essay{color:var(--koji);border-color:var(--koji);}
+.tag-things{color:var(--mold);border-color:var(--mold);}
+.tag-notes{color:var(--strudel);border-color:var(--strudel);}
+.tag-zine{color:var(--riso);border-color:var(--riso);}
+.tag-atun{color:var(--ghost);border-color:var(--ghost);}
+
+/* ABOUT STRIP */
+.about-strip{background:var(--riso);color:#fff;padding:5rem 2.5rem;text-align:center;}
+.about-strip h2{font-family:"Fraunces",serif;font-size:clamp(2rem,4vw,4rem);font-style:italic;margin-bottom:1.5rem;color:#fff;letter-spacing:-0.03em;}
+.about-strip p{max-width:52ch;margin:0 auto 2rem;opacity:0.9;font-size:1rem;line-height:1.9;}
+.btn-white{background:transparent;color:#fff;border:1.5px solid #fff;font-family:"Departure Mono",monospace;font-size:0.78rem;letter-spacing:0.06em;text-decoration:none;display:inline-block;padding:0.7rem 1.4rem;transition:all 0.2s;text-transform:uppercase;cursor:crosshair;}
+.btn-white:hover{background:rgba(255,255,255,0.15);}
+
+/* FOOTER */
+footer{background:var(--ink);color:var(--cream);padding:4rem 2.5rem 2rem;}
+.footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid #2a2820;}
+.footer-col h4{font-family:"Departure Mono",monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:#3a3828;margin-bottom:1.25rem;}
+.footer-col p{font-size:0.88rem;color:#7a7060;line-height:1.8;}
+.footer-col a{display:block;font-family:"Departure Mono",monospace;font-size:0.73rem;color:#7a7060;text-decoration:none;margin-bottom:0.6rem;letter-spacing:0.04em;transition:color 0.15s;}
+.footer-col a:hover{color:var(--cream);}
+.footer-bottom{max-width:1400px;margin:1.5rem auto 0;display:flex;justify-content:space-between;font-family:"Departure Mono",monospace;font-size:0.65rem;color:#3a3828;letter-spacing:0.06em;text-transform:uppercase;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero-text>*{animation:fadeUp 0.6s ease both;}
+.hero-text>*:nth-child(1){animation-delay:0.05s;}
+.hero-text>*:nth-child(2){animation-delay:0.15s;}
+.hero-text>*:nth-child(3){animation-delay:0.28s;}
+.hero-text>*:nth-child(4){animation-delay:0.42s;}
+.hero-text>*:nth-child(5){animation-delay:0.55s;}
+
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-text{padding-right:0;}
+  .hero-visual{display:none;}
+  .strudel-grid{grid-template-columns:1fr;}
+  .atun-intro{grid-template-columns:1fr;gap:2rem;}
+  .footer-inner{grid-template-columns:1fr;gap:2rem;}
+  .nav-pills{display:none;}
+  .section{padding:4rem 1.5rem;}
+  footer{padding:3rem 1.5rem 1.5rem;}
+  .essay-entry{grid-template-columns:70px 1fr;gap:1rem;}
+  .essay-tag{display:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCASdBJ0DASIAAhEBAxEB/8QAHQABAQABBQEBAAAAAAAAAAAAAAQDAQIFBggHCf/EAFIQAQABAgIDCwYLBAcFCQEAAAABAgMEBQYREwcIEiExM1FSVHGRFRYyYZKhFCI2N0FzdHWBs9I0NbGyGCNCVoKUwRdicrTCQ1WDk5WipdHT4f/EABoBAQADAQEBAAAAAAAAAAAAAAADBAUCAQb/xAAzEQEAAQMABwYGAgIDAQAAAAAAAQIDBAUREhQVUVITITFBobEyMzRxgfBhwZHRBiLxQv/aAAwDAQACEQMRAD8A8ZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q==" alt="Zine Tofeh and Things" class="logo-img"></a>
+  <ul class="nav-pills">
+    <li><a href="#strudel">Strudel</a></li>
+    <li><a href="#zines">Zines</a></li>
+    <li><a href="#ghostly-atun" class="active">Ghostly Atun</a></li>
+    <li><a href="#essays">Essays</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-tags">
+      <span class="pill pill-blue">Strudel Livecoder</span>
+      <span class="pill pill-pink">Zinester</span>
+      <span class="pill pill-koji">Fermentation</span>
+      <span class="pill pill-mold">Food Science</span>
+      <span class="pill pill-ghost">Ghostly Atun</span>
+    </div>
+    <h1>
+      I code<br>
+      <span class="l2">live rhythms.</span><br>
+      <span class="l3">Print zines.</span><br>
+      Grow cultures.
+    </h1>
+    <p class="hero-sub">
+      Playing music in <strong>Strudel</strong>. Folding <strong>zines</strong> about microbes. Making ghost characters. Studying fermentation through <strong>food science</strong>. Based in Jakarta.
+    </p>
+    <div class="hero-actions">
+      <a href="#zines" class="btn btn-koji">Browse Zines</a>
+      <a href="#ghostly-atun" class="btn btn-atun">Meet Ghostly Atun</a>
+      <a href="#strudel" class="btn btn-ghost-style">Watch me livecode</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="wave-bars" style="top:20px;left:50%;transform:translateX(-50%);">
+      <div class="bar" style="height:40px;--dur:0.8s;"></div>
+      <div class="bar" style="height:70px;--dur:1.1s;"></div>
+      <div class="bar" style="height:28px;--dur:0.7s;"></div>
+      <div class="bar" style="height:80px;--dur:1.3s;"></div>
+      <div class="bar" style="height:50px;--dur:0.9s;"></div>
+      <div class="bar" style="height:65px;--dur:1.05s;"></div>
+      <div class="bar" style="height:35px;--dur:1.2s;opacity:0.7;"></div>
+      <div class="bar" style="height:75px;--dur:0.85s;"></div>
+      <div class="bar" style="height:45px;--dur:1.15s;"></div>
+      <div class="bar" style="height:60px;--dur:0.95s;"></div>
+      <div class="bar" style="height:22px;--dur:1.05s;opacity:0.7;"></div>
+      <div class="bar" style="height:55px;--dur:0.75s;"></div>
+    </div>
+
+    <svg width="220" height="310" viewBox="0 0 220 310" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:80px;">
+      <rect x="28" y="82" width="164" height="206" rx="14" fill="#e6dfd0" stroke="#1c1a15" stroke-width="2.5"/>
+      <rect x="28" y="152" width="164" height="136" rx="0 0 14 14" fill="#c17f3b" opacity="0.22"/>
+      <rect x="28" y="150" width="164" height="7" rx="2" fill="#c17f3b" opacity="0.45"/>
+      <ellipse cx="78"  cy="152" rx="22" ry="6" fill="#4a7c59" opacity="0.3"/>
+      <ellipse cx="132" cy="152" rx="14" ry="4" fill="#4a7c59" opacity="0.2"/>
+      <circle cx="78"  cy="205" r="7"  fill="#c17f3b" opacity="0.25"/>
+      <circle cx="122" cy="228" r="5"  fill="#c17f3b" opacity="0.2"/>
+      <circle cx="98"  cy="182" r="5"  fill="#c17f3b" opacity="0.18"/>
+      <circle cx="148" cy="200" r="4"  fill="#c17f3b" opacity="0.25"/>
+      <rect x="50" y="52" width="120" height="36" rx="7" fill="#dbd2be" stroke="#1c1a15" stroke-width="2.5"/>
+      <rect x="38" y="30" width="144" height="30" rx="7" fill="#1c1a15"/>
+      <rect x="55" y="164" width="110" height="62" rx="4" fill="#faf7f0" stroke="#c8bfab" stroke-width="1.5"/>
+      <rect x="67" y="176" width="36" height="4" rx="2" fill="#c17f3b" opacity="0.7"/>
+      <rect x="67" y="186" width="76" height="3" rx="1.5" fill="#c8bfab"/>
+      <rect x="67" y="193" width="58" height="3" rx="1.5" fill="#c8bfab"/>
+      <rect x="67" y="200" width="68" height="3" rx="1.5" fill="#c8bfab"/>
+    </svg>
+
+    <div class="zine-float">
+      <div class="zl b"></div><div class="zl"></div><div class="zl s"></div>
+      <div class="zl"></div><div class="zl"></div><div class="zl s"></div>
+      <div class="zstamp">ISSUE 03</div>
+    </div>
+    <div class="spore" style="width:28px;height:28px;left:55px;top:195px;animation-duration:6s;"></div>
+    <div class="spore" style="width:16px;height:16px;left:175px;top:245px;animation-duration:8s;animation-delay:2s;"></div>
+  </div>
+</div>
+
+<!-- STRUDEL -->
+<div class="strudel-bg" id="strudel">
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-num">01 //</span>
+      <h2 style="color:var(--cream);">Strudel Livecoding</h2>
+    </div>
+    <div class="strudel-grid">
+      <div class="strudel-about">
+        <div class="live-badge"><div class="live-dot"></div> Performing live weekly</div>
+        <p>Making music by <strong>typing patterns in real time</strong> using <strong>Strudel</strong> — a browser-based live coding environment. No DAW, no pre-recorded loops. Just a text cursor and a pattern language.</p>
+        <br>
+        <p>My sessions go between <strong>gamelan textures</strong>, broken percussion, and whatever the fermentation crocks next to me are suggesting. Everything in public, mistakes included.</p>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.5rem;">
+          <a href="https://strudel.cc" target="_blank" class="btn-code">strudel.cc &#8599;</a>
+          <a href="#" class="btn-code">Past sessions</a>
+          <a href="#" class="btn-code">YouTube archive</a>
+        </div>
+      </div>
+      <div class="code-block">
+<span class="cm">// kopi-susu rhythm, gamelan mode</span>
+<span class="cs">stack</span>(
+  <span class="cs">sound</span>(<span class="cg">"bd*2 [~ bd] ~ bd"</span>)
+    .<span class="cs">bank</span>(<span class="cg">"RolandTR808"</span>),
+
+  <span class="cs">sound</span>(<span class="cg">"hh*8"</span>)
+    .<span class="cs">gain</span>(<span class="cg">"0.4 0.6"</span>.<span class="cs">fast</span>(<span class="co">2</span>))
+    .<span class="cs">pan</span>(<span class="cs">sine</span>),
+
+  <span class="cs">note</span>(<span class="cg">"c3 [eb3 g3] bb2 f3"</span>)
+    .<span class="cs">sound</span>(<span class="cg">"gm_vibraphone"</span>)
+    .<span class="cs">slow</span>(<span class="co">2</span>)
+    .<span class="cs">room</span>(<span class="co">0.6</span>),
+
+  <span class="cs">sound</span>(<span class="cg">"~ glitch ~ [glitch ~]"</span>)
+    .<span class="cs">speed</span>(<span class="cs">rand</span>.<span class="cs">range</span>(<span class="co">0.5</span>,<span class="co">2</span>))
+    .<span class="cs">gain</span>(<span class="co">0.25</span>)
+).<span class="cs">cpm</span>(<span class="co">88</span>)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ZINES -->
+<div id="zines">
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-num">02 //</span>
+      <h2>Zine Catalogue</h2>
+    </div>
+    <div class="zine-grid">
+      <a href="#" class="zine-card">
+        <div class="zine-cover zc-pink"><span class="issue-badge">Issue 01</span>Mold is Not the Enemy</div>
+        <div class="zine-info"><div class="zine-title">Mold is Not the Enemy</div><div class="zine-meta">2024 &middot; 20 pages &middot; Risograph</div></div>
+      </a>
+      <a href="#" class="zine-card">
+        <div class="zine-cover zc-koji"><span class="issue-badge">Issue 02</span>The Koji Diaries</div>
+        <div class="zine-info"><div class="zine-title">The Koji Diaries</div><div class="zine-meta">2024 &middot; 28 pages &middot; Photocopy</div></div>
+      </a>
+      <a href="#" class="zine-card">
+        <div class="zine-cover zc-mold"><span class="issue-badge">Issue 03</span>Lacto &amp; the Art of Waiting</div>
+        <div class="zine-info"><div class="zine-title">Lacto &amp; the Art of Waiting</div><div class="zine-meta">2025 &middot; 16 pages &middot; Digital + Print</div></div>
+      </a>
+      <a href="#" class="zine-card">
+        <div class="zine-cover zc-blue"><span class="issue-badge">Issue 04</span>Patterns: Strudel &times; Ferment</div>
+        <div class="zine-info"><div class="zine-title">Patterns: Strudel &times; Ferment</div><div class="zine-meta">2025 &middot; 24 pages &middot; Risograph</div></div>
+      </a>
+      <a href="#" class="zine-card">
+        <div class="zine-cover zc-paper"><span class="issue-badge">Issue 05</span>Tempeh Notes from Jakarta</div>
+        <div class="zine-info"><div class="zine-title">Tempeh Notes from Jakarta</div><div class="zine-meta">2025 &middot; 32 pages &middot; Photocopy</div></div>
+      </a>
+      <div class="zine-card zine-add">
+        <span style="font-size:1.4rem;">+</span>
+        request a copy
+      </div>
+    </div>
+    <div style="margin-top:2rem;">
+      <a href="mailto:you@example.com" class="btn btn-ghost-style" style="font-size:0.75rem;">Email to order / trade zines &#8599;</a>
+    </div>
+  </div>
+</div>
+
+<!-- GHOSTLY ATUN -->
+<div class="atun-bg" id="ghostly-atun">
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-num" style="color:#3a3a5a;">03 //</span>
+      <h2 style="color:var(--atun2);">Ghostly Atun</h2>
+    </div>
+
+    <div class="atun-intro">
+      <div class="strudel-about">
+        <h3>A ghost who haunts fermenting jars and broken beats.</h3>
+        <p><strong>Ghostly Atun</strong> is my original character — a soft, melancholic ghost with a big appetite and a tendency to appear near warm, bubbling things. Atun doesn't scare anyone. Atun just... lingers.</p>
+        <p>Born somewhere between a late-night koji incubation session and a Strudel pattern that refused to resolve, Atun is the mascot of <strong>Zine Tofeh and Things</strong>. You'll find traces of Atun in the zines, in stream backgrounds, and in the general vibe of everything I make.</p>
+        <p>More lore, illustrations, and Atun-adjacent things coming soon.</p>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.5rem;">
+          <a href="#zines" class="btn btn-atun" style="font-size:0.72rem;">Atun in the zines</a>
+          <a href="mailto:you@example.com" class="btn-code" style="border-color:#2a2a3e;color:#6a6a9a;">Commission Atun art</a>
+        </div>
+      </div>
+
+      <div class="char-card">
+        <div class="ghost-wrap">
+          <div style="position:relative;">
+            <div class="ghost-body">
+              <div class="ghost-eye l"></div>
+              <div class="ghost-eye r"></div>
+            </div>
+            <div class="ghost-atun-text">ghostly atun</div>
+          </div>
+        </div>
+        <div class="char-name">Ghostly Atun</div>
+        <div class="char-tag">Original Character &mdash; Tofeh Universe</div>
+        <div class="char-traits">
+          <div class="trait"><span>Species</span><span class="trait-val">Ghost (Hantu Lembut)</span></div>
+          <div class="trait"><span>Habitat</span><span class="trait-val">Fermentation rooms, streams</span></div>
+          <div class="trait"><span>Likes</span><span class="trait-val">Warm koji, slow patterns</span></div>
+          <div class="trait"><span>Dislikes</span><span class="trait-val">Rushed tempos, mold failures</span></div>
+          <div class="trait"><span>First appeared</span><span class="trait-val">Zine Issue 03</span></div>
+          <div class="trait"><span>Alignment</span><span class="trait-val">Chaotic Wholesome</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Atun appearances -->
+    <div style="margin-bottom:1.5rem;">
+      <div style="font-family:'Departure Mono',monospace;font-size:0.65rem;color:#3a3a5a;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;">Appearances &amp; Lore</div>
+    </div>
+    <div class="atun-gallery">
+      <div class="atun-item">
+        <div class="atun-item-label">Zine Issue 03</div>
+        <div class="atun-item-title">First sighting</div>
+        <div class="atun-item-sub">Appears in the lacto-fermentation chapter. Watches over the brine jars.</div>
+      </div>
+      <div class="atun-item">
+        <div class="atun-item-label">Stream Lore</div>
+        <div class="atun-item-title">Atun haunts the DAW</div>
+        <div class="atun-item-sub">Blamed for all unexpected pattern glitches during live sessions.</div>
+      </div>
+      <div class="atun-item">
+        <div class="atun-item-label">Headcanon</div>
+        <div class="atun-item-title">Cannot eat, only smell</div>
+        <div class="atun-item-sub">Deeply sad about this. Spends a lot of time near tempeh incubators.</div>
+      </div>
+      <div class="atun-item">
+        <div class="atun-item-label">Coming Soon</div>
+        <div class="atun-item-title">Atun Zine (solo)</div>
+        <div class="atun-item-sub">A dedicated Atun lore zine. Photocopy. Emotionally devastating.</div>
+      </div>
+      <div class="atun-item">
+        <div class="atun-item-label">Design Notes</div>
+        <div class="atun-item-title">Palette: blue + sand</div>
+        <div class="atun-item-sub">Soft blue-grey body, warm sand background. Sad but cozy energy.</div>
+      </div>
+      <div class="atun-item" style="border:1px dashed #2a2a3e;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100px;cursor:crosshair;">
+        <div style="font-family:'Departure Mono',monospace;font-size:0.65rem;color:#3a3a5a;letter-spacing:0.08em;text-align:center;">more atun lore<br>coming soon</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ESSAYS & THINGS -->
+<div class="essay-bg" id="essays">
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-num">04 //</span>
+      <h2>Essays &amp; Things</h2>
+    </div>
+    <div class="essay-list">
+      <a href="#" class="essay-entry">
+        <div class="essay-date">Mar 2025</div>
+        <div>
+          <div class="essay-title">Why Mold is the Best Collaborator</div>
+          <div class="essay-desc">On giving up control in fermentation — and what live coding taught me to appreciate about slow, unpredictable processes.</div>
+        </div>
+        <span class="essay-tag tag-essay">Essay</span>
+      </a>
+      <a href="#" class="essay-entry">
+        <div class="essay-date">Feb 2025</div>
+        <div>
+          <div class="essay-title">Strudel Patterns I Keep Coming Back To</div>
+          <div class="essay-desc">A running list of pattern combinations that feel like home — rhythmic, textured, a little broken.</div>
+        </div>
+        <span class="essay-tag tag-notes">Notes</span>
+      </a>
+      <a href="#" class="essay-entry">
+        <div class="essay-date">Feb 2025</div>
+        <div>
+          <div class="essay-title">Ghostly Atun: An Origin Story</div>
+          <div class="essay-desc">How a late-night koji session and a bug in my pattern language created a ghost with food science opinions.</div>
+        </div>
+        <span class="essay-tag tag-atun">Atun</span>
+      </a>
+      <a href="#" class="essay-entry">
+        <div class="essay-date">Jan 2025</div>
+        <div>
+          <div class="essay-title">Zine-Making as Food Science Practice</div>
+          <div class="essay-desc">Both require precise conditions, patience, and accepting that the result will be a little different than planned.</div>
+        </div>
+        <span class="essay-tag tag-zine">Zine</span>
+      </a>
+      <a href="#" class="essay-entry">
+        <div class="essay-date">Jan 2025</div>
+        <div>
+          <div class="essay-title">Tempeh Batch #5: What Went Wrong</div>
+          <div class="essay-desc">A post-mortem on a failed inoculation. The mycelium didn't bind. Here's what I learned.</div>
+        </div>
+        <span class="essay-tag tag-things">Things</span>
+      </a>
+      <a href="#" class="essay-entry">
+        <div class="essay-date">Dec 2024</div>
+        <div>
+          <div class="essay-title">Water Activity and Why It Matters for Koji</div>
+          <div class="essay-desc">A food science deep dive into the single most important variable in growing Aspergillus oryzae at home.</div>
+        </div>
+        <span class="essay-tag tag-essay">Essay</span>
+      </a>
+    </div>
+    <div style="margin-top:2rem;">
+      <a href="#" class="btn btn-ghost-style" style="font-size:0.75rem;">All essays &amp; things &#8599;</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <h2>Let's trade spores &amp; patterns.</h2>
+  <p>Open to zine swaps, live coding collabs, fermentation experiments, Atun commissions, or just talking koji with someone who gets it. Based in Jakarta.</p>
+  <a href="mailto:you@example.com" class="btn-white">Get in touch</a>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Zine Tofeh and Things</h4>
+      <p>Strudel livecoder, zinester, fermentation researcher, and creator of Ghostly Atun. Jakarta, Indonesia.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Find me</h4>
+      <a href="https://strudel.cc" target="_blank">strudel.cc profile &#8599;</a>
+      <a href="https://github.com" target="_blank">GitHub</a>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="https://youtube.com" target="_blank">YouTube (livecoding)</a>
+      <a href="mailto:you@example.com">Email</a>
+    </div>
+    <div class="footer-col">
+      <h4>Host this free</h4>
+      <a href="https://pages.github.com" target="_blank">GitHub Pages &#8599;</a>
+      <a href="https://netlify.com" target="_blank">Netlify &#8599;</a>
+      <a href="https://vercel.com" target="_blank">Vercel &#8599;</a>
+      <p style="margin-top:0.75rem;font-size:0.8rem;">Single HTML file.<br>Drag, drop, done.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&#169; 2025 Zine Tofeh and Things &mdash; Jakarta, ID</span>
+    <span>Strudel &middot; Zines &middot; Ghostly Atun &middot; Fermentation</span>
+  </div>
+</footer>
+
+</body>
+</html>
